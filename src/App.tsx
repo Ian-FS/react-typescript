@@ -2,6 +2,7 @@ import React from 'react'
 import Button from './Button'
 import { Input } from './Input'
 import { ButtonExerc } from './ButtonExerc'
+import { CheckBox } from './CheckBox'
 
 function App() {
   const [total, setTotal] = React.useState(0)
@@ -16,11 +17,12 @@ function App() {
 
   return (
     <div>
+      <CheckBox label='Termo de uso do usuário'/>
       <p>Total: {total}</p>
-      <ButtonExerc valor={valor} setValor={setValor}/>
-
-
-
+      <ButtonExerc 
+        valor={valor} 
+        setValor={setValor}
+      />
       <Button 
         tamanho="1.5rem"
         onClick={incrementar}
