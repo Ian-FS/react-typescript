@@ -1,9 +1,11 @@
 import React from 'react'
 import Button from './Button'
 import { Input } from './Input'
+import { ButtonExerc } from './ButtonExerc'
 
 function App() {
   const [total, setTotal] = React.useState(0)
+  const [valor, setValor] = React.useState(0)
   
   function incrementar() {
     setTotal((total) => total +1)
@@ -15,6 +17,10 @@ function App() {
   return (
     <div>
       <p>Total: {total}</p>
+      <ButtonExerc valor={valor} setValor={setValor}/>
+
+
+
       <Button 
         tamanho="1.5rem"
         onClick={incrementar}
