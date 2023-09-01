@@ -36,17 +36,8 @@ function App() {
 
   return (
     <div>
-      <CheckBox label="Termo de uso do usuário" />
-      <p>Total: {total}</p>
-      <ButtonExerc valor={valor} setValor={setValor} />
-      <Button onClick={carregaDados} children="Carregar" />
-      <p>{typeof data && data?.nome}</p>
-      <Button tamanho="1.5rem" onClick={incrementar} children="Incrementar" />
-      <Button tamanho="1.5rem" onClick={resetar} children="Resetar" />
-      <Input id="nome" tamanho="1.5rem" label="Nome" />
-      <Input id="email" tamanho="1.5rem" label="Email" type="email" />
-      <Input id="inicio" tamanho="1.5rem" label="Inicio de viagem" type="date" />
-      <Input id="horario" tamanho="1.5rem" label="Horário" type="time" />
+      <Input id="inicio" tamanho="1.5rem" label="Inicio" type="date" />
+      <Input id="final" tamanho="1.5rem" label="Fim" type="date" />
     </div>
   );
 }
