@@ -8,7 +8,9 @@ function App() {
     status: string;
   };
 
-  const [data, setData] = useState<null | venda[]>(null);
+  const [dados, setDados] = React.useState<null | venda[]>([
+    { id: "1", nome: "pedro", status: "peocessando" },
+  ]);
   const [dataInicial, setDataInicial] = useState("");
   const [dataFinal, setDataFinal] = useState("");
 
@@ -29,28 +31,30 @@ function App() {
         `https://data.origamid.dev/vendas/?inicio=${dataInicial}&final=${dataFinal}`
       )
         .then((res) => res.json())
-        .then((dados: venda[]) => {
-          dados.forEach((dado) => {
-            console.log(`${dado.nome}: ${dado.status}`);
-          });
-        });
+        .then((dados: venda[]) => setDados(dados as venda[]))
+        .catch((error) => console.log(error));
   }, [dataInicial, dataFinal]);
 
   return (
     <div>
       <div>
-        <Input id="inicio" label="Inicio" type="date" onChange={handleChange} />
-        <Input id="final" label="Fim" type="date" onChange={handleChange} />
+        <Input
+          id="inicio"
+          label="Inicio"
+          type="date"
+          onChange={handleChange}
+          value={dataInicial}
+        />
+        <Input
+          id="final"
+          label="Fim"
+          type="date"
+          onChange={handleChange}
+          value={dataFinal}
+        />
       </div>
       <div>
-        <ul>
-          {data &&
-            data.map((venda) => {
-              <li key={venda.id}>
-                {venda.nome}: ${venda.status}
-              </li>;
-            })}
-        </ul>
+        <ul>{dados}</ul>
       </div>
     </div>
   );
