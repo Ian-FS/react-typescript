@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "./Input";
 
-function App() {
-  type venda = {
-    id: string;
-    nome: string;
-    status: string;
-  };
+type venda = {
+  id: string;
+  nome: string;
+  status: string;
+};
 
-  const [dados, setDados] = React.useState<null | venda[]>([
-    { id: "1", nome: "pedro", status: "peocessando" },
-  ]);
+function App() {
+  const [dados, setDados] = React.useState<null | venda[]>(null);
   const [dataInicial, setDataInicial] = useState("");
   const [dataFinal, setDataFinal] = useState("");
 
@@ -31,7 +29,7 @@ function App() {
         `https://data.origamid.dev/vendas/?inicio=${dataInicial}&final=${dataFinal}`
       )
         .then((res) => res.json())
-        .then((dados: venda[]) => setDados(dados as venda[]))
+        .then((dados) => setDados(dados as venda[]))
         .catch((error) => console.log(error));
   }, [dataInicial, dataFinal]);
 
@@ -53,9 +51,13 @@ function App() {
           value={dataFinal}
         />
       </div>
-      <div>
-        <ul>{dados}</ul>
-      </div>
+      <ul>
+        {dados?.map((dado) => (
+          <li key={dado.id}>
+            {dado.nome}: {dado.status}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
