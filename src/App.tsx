@@ -16,8 +16,7 @@ function App() {
             setIsPlay(!isPlay);
           }}
         />
-        <Button children={"Pause"} onClick={() => video.current?.pause()} />
-        <Button children={"Mute"} onClick={() => setIsMuted(() => !true)} />
+        <Button children={"Mute"} onClick={() => setIsMuted(!isMuted)} />
       </div>
       <video
         ref={video}
