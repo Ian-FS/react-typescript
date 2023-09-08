@@ -17,6 +17,10 @@ function App() {
           }}
         />
         <Button children={"Mute"} onClick={() => setIsMuted(!isMuted)} />
+        <Button
+          children={"PiP"}
+          onClick={() => video.current?.requestPictureInPicture()}
+        />
       </div>
       <video
         ref={video}
