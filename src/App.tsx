@@ -6,6 +6,10 @@ function App() {
   const [isMuted, setIsMuted] = useState(false);
   const [isPlay, setIsPlay] = useState(true);
 
+  const addTime = () =>
+    video.current &&
+    (video.current.currentTime = video.current.currentTime + 2);
+
   return (
     <div>
       <div style={{ display: "flex", gap: "10px" }}>
@@ -17,6 +21,7 @@ function App() {
           }}
         />
         <Button children={"Mute"} onClick={() => setIsMuted(!isMuted)} />
+        <Button children={"+2s"} onClick={addTime} />
         <Button
           children={"PiP"}
           onClick={() => video.current?.requestPictureInPicture()}
