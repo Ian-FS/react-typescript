@@ -10,6 +10,9 @@ function App() {
     video.current &&
     (video.current.currentTime = video.current.currentTime + 2);
 
+  const incressSpeedVideo = (speed: number) =>
+    video.current && (video.current.playbackRate = speed);
+
   return (
     <div>
       <div style={{ display: "flex", gap: "10px" }}>
@@ -22,6 +25,9 @@ function App() {
         />
         <Button children={"Mute"} onClick={() => setIsMuted(!isMuted)} />
         <Button children={"+2s"} onClick={addTime} />
+        <Button children={"1.25x"} onClick={() => incressSpeedVideo(1.25)} />
+        <Button children={"1.5x"} onClick={() => incressSpeedVideo(1.5)} />
+        <Button children={"2x"} onClick={() => incressSpeedVideo(2)} />
         <Button
           children={"PiP"}
           onClick={() => video.current?.requestPictureInPicture()}
