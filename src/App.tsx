@@ -13,6 +13,15 @@ function App() {
   const incressSpeedVideo = (speed: number) =>
     video.current && (video.current.playbackRate = speed);
 
+  const incressAndDecressVolume = (simbolo: string) => {
+    if (video.current && simbolo === "+" && video.current.volume < 1) {
+      video.current.volume = video.current.volume + 0.2;
+    }
+    if (video.current && simbolo === "-" && video.current.volume > 0.2) {
+      video.current.volume = video.current.volume - 0.2;
+    }
+  };
+
   return (
     <div>
       <div style={{ display: "flex", gap: "10px" }}>
@@ -23,6 +32,8 @@ function App() {
             setIsPlay(!isPlay);
           }}
         />
+        <Button children={"+"} onClick={() => incressAndDecressVolume("+")} />
+        <Button children={"-"} onClick={() => incressAndDecressVolume("-")} />
         <Button children={"Mute"} onClick={() => setIsMuted(!isMuted)} />
         <Button children={"+2s"} onClick={addTime} />
         <Button children={"1.25x"} onClick={() => incressSpeedVideo(1.25)} />
