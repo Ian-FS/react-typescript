@@ -41,7 +41,11 @@ function App() {
         <Button children={"2x"} onClick={() => incressSpeedVideo(2)} />
         <Button
           children={"PiP"}
-          onClick={() => video.current?.requestPictureInPicture()}
+          onClick={() =>
+            document.pictureInPictureElement
+              ? document.exitPictureInPicture()
+              : video.current?.requestPictureInPicture()
+          }
         />
       </div>
       <video
