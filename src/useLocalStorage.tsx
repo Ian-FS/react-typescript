@@ -1,18 +1,18 @@
-import React, { Dispatch, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-export const useLocalStorage = (
+const useLocalStorage = (
   key: string,
-  value: string
-): [string, Dispatch<React.SetStateAction<string>>] => {
-  const [state, setState] = useState(() =>
-    window.localStorage.getItem(key)
-      ? (window.localStorage.getItem(key) as string)
-      : value
-  );
+  volumeInicial: string
+): [string, React.Dispatch<React.SetStateAction<string>>] => {
+  const [state, setState] = useState(() => {
+    const local = window.localStorage.getItem(key);
+    return local ? local : volumeInicial;
+  });
 
   useEffect(() => {
     window.localStorage.setItem(key, state);
-  }, [state, key]);
+  }, [key, state]);
 
   return [state, setState];
 };
+export default useLocalStorage;

@@ -1,11 +1,10 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "./Button";
-import { useLocalStorage } from "./useLocalStorage";
+import useLocalStorage from "./useLocalStorage";
 
 function App() {
   const video = useRef<HTMLVideoElement>(null);
-  const volumeString = video.current && video.current.volume.toString();
-  const [key, value] = useLocalStorage("volume", volumeString as string);
+  const [volume, setVolume] = useLocalStorage("volume", "1");
 
   const incressAndDecressVolume = (simbolo: string) => {
     if (video.current && simbolo === "+" && video.current.volume < 1) {
@@ -15,6 +14,12 @@ function App() {
       video.current.volume = video.current.volume - 0.2;
     }
   };
+
+  useEffect(() => {
+    if (!video.current) return;
+    const n = parseFloat(volume);
+    video.current.volume = parseFloat(volume);
+  });
 
   return (
     <div>
@@ -27,6 +32,10 @@ function App() {
         style={{ width: "50%" }}
         src="../src/assets/video.mp4"
         controls
+        onVolumeChange={() => {
+          if (!video.current) return;
+          setVolume(video.current?.volume.toString());
+        }}
       ></video>
     </div>
   );
