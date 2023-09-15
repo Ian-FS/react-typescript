@@ -8,10 +8,14 @@ function App() {
 
   const incressAndDecressVolume = (simbolo: string) => {
     if (video.current && simbolo === "+" && video.current.volume < 1) {
-      video.current.volume = video.current.volume + 0.2;
+      if (video.current.volume > 0.8) {
+        video.current.volume = 1;
+      } else video.current.volume = video.current.volume + 0.2;
     }
-    if (video.current && simbolo === "-" && video.current.volume > 0.2) {
-      video.current.volume = video.current.volume - 0.2;
+    if (video.current && simbolo === "-" && video.current.volume >= 0.2) {
+      if (video.current.volume < 0.3) {
+        video.current.volume = 0;
+      } else video.current.volume = video.current.volume - 0.2;
     }
   };
 
