@@ -1,46 +1,30 @@
-import { useEffect, useRef, useState } from "react";
-import Button from "./Button";
-import useLocalStorage from "./useLocalStorage";
+import useFetch from "./useFetch";
 
+type Produto = {
+  id: string;
+  nome: string;
+  preco: number;
+  quantidade: number;
+  descricao: string;
+  internacional: boolean;
+};
 function App() {
-  const video = useRef<HTMLVideoElement>(null);
-  const [volume, setVolume] = useLocalStorage("volume", "1");
-
-  const incressAndDecressVolume = (simbolo: string) => {
-    if (video.current && simbolo === "+" && video.current.volume < 1) {
-      if (video.current.volume > 0.8) {
-        video.current.volume = 1;
-      } else video.current.volume = video.current.volume + 0.2;
-    }
-    if (video.current && simbolo === "-" && video.current.volume >= 0.2) {
-      if (video.current.volume < 0.3) {
-        video.current.volume = 0;
-      } else video.current.volume = video.current.volume - 0.2;
-    }
-  };
-
-  useEffect(() => {
-    if (!video.current) return;
-    const n = parseFloat(volume);
-    video.current.volume = parseFloat(volume);
-  });
+  const produtos = useFetch<[Produto]>("https://data.origamid.dev/produtos");
 
   return (
     <div>
-      <div style={{ display: "flex", gap: "10px" }}>
-        <Button children={"+"} onClick={() => incressAndDecressVolume("+")} />
-        <Button children={"-"} onClick={() => incressAndDecressVolume("-")} />
-      </div>
-      <video
-        ref={video}
-        style={{ width: "50%" }}
-        src="../src/assets/video.mp4"
-        controls
-        onVolumeChange={() => {
-          if (!video.current) return;
-          setVolume(video.current?.volume.toString());
-        }}
-      ></video>
+      {produtos.loading ? (
+        <h1>CARREGANDO...</h1>
+      ) : (
+        <ul>
+          {produtos.data?.map((produto) => (
+            <li key={produto.id}>
+              {produto.nome} : {produto.descricao} - R$:{" "}
+              {produto.preco.toFixed(2)}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
