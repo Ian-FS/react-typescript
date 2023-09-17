@@ -1,3 +1,4 @@
+import { useState } from "react";
 import useFetch from "./useFetch";
 
 type Produto = {
@@ -9,23 +10,48 @@ type Produto = {
   internacional: boolean;
 };
 function App() {
+  const [id, setId] = useState("p001");
+
   const produtos = useFetch<[Produto]>("https://data.origamid.dev/produtos");
+  const produto = useFetch<Produto>(
+    `https://data.origamid.dev/produtos/${id}`,
+    {
+      cache: "force-cache",
+    }
+  );
 
   return (
-    <div>
-      {produtos.loading ? (
-        <h1>CARREGANDO...</h1>
-      ) : (
-        <ul>
-          {produtos.data?.map((produto) => (
-            <li key={produto.id}>
-              {produto.nome} : {produto.descricao} - R$:{" "}
-              {produto.preco.toFixed(2)}
+    <section className="flex">
+      <div>
+        {produtos.loading ? (
+          <h1>CARREGANDO...</h1>
+        ) : (
+          <ul>
+            {produtos.data?.map((produto) => (
+              <button onClick={() => setId(produto.id)} key={produto.id}>
+                {produto.id}
+              </button>
+            ))}
+          </ul>
+        )}
+      </div>
+      <div>
+        {produto.loading && <div>CARREGANDO...</div>}
+        {produto.data && (
+          <ul>
+            <li>
+              <b>Nome:</b> {produto.data.nome}
             </li>
-          ))}
-        </ul>
-      )}
-    </div>
+            <li>
+              <b>Descrição:</b> {produto.data.descricao}
+            </li>
+            <li>
+              <b>Preço:</b> R$: {produto.data.preco.toFixed(2)}
+            </li>
+          </ul>
+        )}
+      </div>
+    </section>
   );
 }
 
