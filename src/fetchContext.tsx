@@ -1,6 +1,6 @@
 // Utilize a API: https://data.origamid.dev/usuarios/1
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useState } from "react";
 import useFetch from "./useFetch";
 
 // 1 - Crie um UserContext
@@ -20,29 +20,30 @@ export type user = {
     qualidade: string;
   };
 };
-type IMyfetchContext = {
-  userData: object;
-  setUserData: React.Dispatch<
-    React.SetStateAction<{
-      data: user | null;
-      loading: boolean;
-      error: string | null;
-    }>
-  >;
+export type userDataType = {
+  data: user | null;
+  loading: boolean;
+  error: string | null;
+};
+export type myfetchContextType = {
+  userData: userDataType;
+  setUserData: React.Dispatch<React.SetStateAction<userDataType>>;
 };
 
-export const myFetchContext = createContext<IMyfetchContext | null>(null);
+export const MyFetchContext = createContext<myfetchContextType | null>(null);
 
 export const MyFetchContextProvider = ({
   children,
 }: React.PropsWithChildren) => {
-  const [userData, setUserData] = useState(
-    useFetch<user>("https://data.origamid.dev/usuarios/1")
-  );
+  const Fteste = () => {
+    const userData = useFetch<user>("https://data.origamid.dev/usuarios/1");
+    return userData;
+  };
+  const [userData, setUserData] = useState(Fteste);
 
   return (
-    <myFetchContext.Provider value={{ userData, setUserData }}>
+    <MyFetchContext.Provider value={{ userData, setUserData }}>
       {children}
-    </myFetchContext.Provider>
+    </MyFetchContext.Provider>
   );
 };

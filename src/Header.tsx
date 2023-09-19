@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { myFetchContext } from "./fetchContext";
+import { MyFetchContext } from "./fetchContext";
 
 const Header = () => {
-  const teste = useContext(myFetchContext);
-  console.log(teste);
-  return <h1>{teste}</h1>;
+  const data = useContext(MyFetchContext);
+  console.log(data?.userData.data?.nome);
+  return <h1>{data?.userData.data?.nome}</h1>;
 };
 
 export default Header;
