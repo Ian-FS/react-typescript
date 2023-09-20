@@ -23,26 +23,20 @@ export type user = {
 export type userDataType = {
   data: user | null;
   loading: boolean;
-  error: string | null;
-};
-export type myfetchContextType = {
-  userData: userDataType;
-  setUserData: React.Dispatch<React.SetStateAction<userDataType>>;
+  error?: string | null;
 };
 
-export const MyFetchContext = createContext<myfetchContextType | null>(null);
+export const MyFetchContext = createContext<userDataType | null>(null);
 
 export const MyFetchContextProvider = ({
   children,
 }: React.PropsWithChildren) => {
-  const Fteste = () => {
-    const userData = useFetch<user>("https://data.origamid.dev/usuarios/1");
-    return userData;
-  };
-  const [userData, setUserData] = useState(Fteste);
+  const { data, loading } = useFetch<user>(
+    "https://data.origamid.dev/usuarios/1"
+  );
 
   return (
-    <MyFetchContext.Provider value={{ userData, setUserData }}>
+    <MyFetchContext.Provider value={{ data, loading }}>
       {children}
     </MyFetchContext.Provider>
   );
