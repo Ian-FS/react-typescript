@@ -24,6 +24,11 @@ function formReducer(state: UserState, action: Action) {
         ...state,
         nome: payload,
       };
+    case ActionType.setEmail:
+      return {
+        ...state,
+        email: payload,
+      };
     default:
       return state;
   }
@@ -41,7 +46,13 @@ export const Form = () => {
           dispatch({ type: ActionType.setNome, payload: target.value })
         }
       />
-      <Input label="Email:" id="email" />
+      <Input
+        label={`Email: ${state.email}`}
+        id="email"
+        onChange={({ target }) => {
+          dispatch({ type: ActionType.setEmail, payload: target.value });
+        }}
+      />
     </div>
   );
 };
